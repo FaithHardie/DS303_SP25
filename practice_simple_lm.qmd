@@ -1,7 +1,7 @@
 ---
 title: "Practice: Simple Linear Regression"
 author: 
-  - "Student Name"
+  - "Faith Hardie"
   - "DS303, SP25"
   - "Prof. Amber Camp"
 date: 1/17/25
@@ -32,24 +32,22 @@ Yes! Despite, again, basically being the same thing, the difference in notation 
 
 What is the difference between *y* = *b~0~* + *b~1~x* and *y* = *mx* + *b*, and when might we use one over the other? Please use your own words
 
-#### Answer:
+#### Answer: 
 
-(write your answer here)
+The difference between *y* = *b~0~* + *b~1~x* and y = mx +b is that m is the slope in the first and b1x is the slope in the other. The b null is the y int in the first, and the b is the y int in the second. One is used commonly or slope in basic math equations, the other is used more for engineering.
 
 ### Question 2
 
 Think back to our class discussion and your previous studies in math. Tell me below what each part of the equation *y* = *b~0~* + *b~1~x* means. Do this from memory if you can!
 
-#### Answer:
-
-(write your answer here)
+#### Answer: **y is the independent variable, x is the dependent variable, b0 is the y intercept, and b1is the slope.**  
 
 ## Let's try it
 
 Let's start by loading the `MASS` and `ISLR2` packages, which are very large collections of data sets and functions. You may need to install `ISLR2` and `lme4`.
 
 ```{r, echo = FALSE, message = FALSE}
-# install.packages("ISLR2")
+ #install.packages("ISLR2")
 # install.packages("lme4")
 
 library(MASS)
@@ -59,15 +57,15 @@ library(lme4)
 
 ## Boston Housing Data
 
-The `ISLR2` library contains the `Boston` data set, which records `medv` (median house value) for 506 census tracts in Boston. We will seek to predict `medv` using 12 predictors such as `rmvar` (average number of rooms per house), `age` (proportion of owner-occupied units built prior to 1940) and `lstat` (percent of households with low socioeconomic status).
+pThe `ISLR2` library contains the `Boston` data set, which records `medv` (median house value) for 506 census tracts in Boston. We will seek to predict `medv` using 12 predictors such as `rmvar` (average number of rooms per house), `age` (proportion of owner-occupied units built prior to 1940) and `lstat` (percent of households with low socioeconomic status).
 
 ### Question 3
 
 You can just call upon the data (it's already in the package). I'll get you started, but show me below how you'd explore the data even further by adding code in the below code chunk.
 
 ```{r}
-head(Boston)
-
+#head(Boston)
+summary(Boston)
 ```
 
 We learned in class that we can apply a simple linear regression using `lm`. Here is the basic format:
@@ -81,13 +79,13 @@ model <- lm(y ~ x, data=df)
 Use the above basic format to create a linear regression model to predict the **median home value** (medv) based on the **percentage of lower status population** (lstat), using the data from the 'Boston' dataset. Assign it to the variable `lm.model`.
 
 ```{r}
-
+lm.model <- lm(lstat ~ medv, data=Boston) 
 ```
 
 If you set it up right, you should be able to run your model name in the below code chunk and view the basic model output. Give it a try:
 
 ```{r}
-
+lm.model
 ```
 
 ### Question 5
@@ -96,7 +94,7 @@ What is your model output telling you?
 
 #### Answer
 
-(write your answer here)
+My model output is telling me that as the percentage of lower status population increases, the medium home value in that area decreases.
 
 You can also try `summary(lm.model)`.
 
@@ -110,7 +108,7 @@ What additional information do you get from this summary of the model output?
 
 #### Answer
 
-(write your answer here)
+The additional information obtained from the summary of the model output is the medium, max, min, and inner quadrilles of the medium home value in lower status populations.
 
 ## confint() and predict()
 
