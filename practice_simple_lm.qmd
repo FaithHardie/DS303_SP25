@@ -32,7 +32,7 @@ Yes! Despite, again, basically being the same thing, the difference in notation 
 
 What is the difference between *y* = *b~0~* + *b~1~x* and *y* = *mx* + *b*, and when might we use one over the other? Please use your own words
 
-#### Answer: 
+#### Answer:
 
 The difference between *y* = *b~0~* + *b~1~x* and y = mx +b is that m is the slope in the first and b1x is the slope in the other. The b null is the y int in the first, and the b is the y int in the second. One is used commonly or slope in basic math equations, the other is used more for engineering.
 
@@ -40,7 +40,7 @@ The difference between *y* = *b~0~* + *b~1~x* and y = mx +b is that m is the slo
 
 Think back to our class discussion and your previous studies in math. Tell me below what each part of the equation *y* = *b~0~* + *b~1~x* means. Do this from memory if you can!
 
-#### Answer: **y is the independent variable, x is the dependent variable, b0 is the y intercept, and b1is the slope.**  
+#### Answer: **y is the independent variable, x is the dependent variable, b0 is the y intercept, and b1is the slope.**
 
 ## Let's try it
 
@@ -64,7 +64,7 @@ pThe `ISLR2` library contains the `Boston` data set, which records `medv` (media
 You can just call upon the data (it's already in the package). I'll get you started, but show me below how you'd explore the data even further by adding code in the below code chunk.
 
 ```{r}
-#head(Boston)
+head(Boston)
 summary(Boston)
 ```
 
@@ -79,7 +79,7 @@ model <- lm(y ~ x, data=df)
 Use the above basic format to create a linear regression model to predict the **median home value** (medv) based on the **percentage of lower status population** (lstat), using the data from the 'Boston' dataset. Assign it to the variable `lm.model`.
 
 ```{r}
-lm.model <- lm(lstat ~ medv, data=Boston) 
+lm.model <- lm(medv ~ lstat, data=Boston) 
 ```
 
 If you set it up right, you should be able to run your model name in the below code chunk and view the basic model output. Give it a try:
@@ -128,7 +128,9 @@ What do you think the above `confint()` and `predict()` information means? It's 
 
 #### Answer
 
-(write your answer here)
+confint() means the confidence interval is 2.5%, which is the range that tells us how precise the measurements of the lm model is. Basically, we can have 97.5% confidence in the lm model.
+
+the predict() information is predicting how the data points fit into the the fit, upper and lower ranges of the lm model.
 
 ## Visualizing
 
@@ -144,7 +146,9 @@ abline(lm.model)
 Can you convert the above code chunk to `ggplot`? Try below. Have fun with editing the appearance of your plot if you'd like :)
 
 ```{r}
-
+library(ggplot2)
+ggplot() + 
+  geom_point(mapping=aes(x=Boston$lstat, y=Boston$medv), data =Boston) 
 ```
 
 In a future class, we'll explore some diagnostic plots and what that means for evaluating models. For now, just run the below and have a look:
