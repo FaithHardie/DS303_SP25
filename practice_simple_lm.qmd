@@ -71,7 +71,7 @@ summary(Boston)
 We learned in class that we can apply a simple linear regression using `lm`. Here is the basic format:
 
 ```{r}
-model <- lm(y ~ x, data=df)
+#model <- lm(y ~ x, data=df)
 ```
 
 ### Question 4
@@ -136,6 +136,10 @@ the predict() information is predicting how the data points fit into the the fit
 
 Here is a simple base R way to plot this data:
 
+plot(Boston\$lstat, Boston\$medv)
+
+abline(lm.model)
+
 ```{r}
 plot(Boston$lstat, Boston$medv)
 abline(lm.model)
@@ -166,6 +170,7 @@ First, view the dataset. Where can you find information about these variables?
 
 ```{r}
 View(Boston)
+?Boston
 ```
 
 ### Question 9
@@ -174,7 +179,11 @@ What variables are you interested in exploring using a linear regression? Just p
 
 #### Answer
 
-(write your answer here)
+x: lstat
+
+y: ptratio
+
+Research question: As the percent of lower status population changes by town, how does the pupil-teacher ratio change?
 
 ### Question 10
 
@@ -183,10 +192,10 @@ What variables are you interested in exploring using a linear regression? Just p
 Build and run your model, examine the model output:
 
 ```{r}
+lm.model2 <- lm(ptratio ~ lstat, data=Boston) 
 
-
-
-
+plot(Boston$lstat, Boston$ptratio)
+abline(lm.model2)
 ```
 
 #### Part 2
@@ -195,7 +204,7 @@ Explain what you found in plain English. Do your best.
 
 #### Answer
 
-(write your answer here)
+There appears to be a slight, if none positive correlation between the ratio of teachers to pupils to the towns populations status.
 
 ## The end!
 
