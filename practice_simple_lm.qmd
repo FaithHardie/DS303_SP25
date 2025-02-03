@@ -213,3 +213,15 @@ There appears to be a slight, if none positive correlation between the ratio of 
 ## The end!
 
 That's it for now. Please feel free to raise questions in class or via email!
+
+#### 2/3/25 classwork
+
+```{r}
+lm.model3 <- lm(ptratio ~ lstat * crim, data=Boston) 
+summary(lm.model3)
+```
+
+```{r}
+plot(Boston$lstat, Boston$crim)
+abline(lm.model3)
+```
