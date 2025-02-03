@@ -40,7 +40,9 @@ The difference between *y* = *b~0~* + *b~1~x* and y = mx +b is that m is the slo
 
 Think back to our class discussion and your previous studies in math. Tell me below what each part of the equation *y* = *b~0~* + *b~1~x* means. Do this from memory if you can!
 
-#### Answer: **y is the independent variable, x is the dependent variable, b0 is the y intercept, and b1is the slope.**
+#### Answer: **y is the dependent variable, x is the independent variable, b0 is the y intercept, and b1is the slope.**
+
+updates after class: y is outcome, x is predictors.
 
 ## Let's try it
 
@@ -105,6 +107,8 @@ summary(lm.model)
 ### Question 6
 
 What additional information do you get from this summary of the model output?
+
+update: 3 stars=shows where lands on pvalue. In this, p value is significant. Everytime lstat goes up 1, our outcome goes down .95.
 
 #### Answer
 
