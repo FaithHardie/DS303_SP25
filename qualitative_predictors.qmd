@@ -164,13 +164,16 @@ ggplot(carseats, aes(x = ShelveLoc, y = Price)) +
 
 The differences between the bad, good, and medium price averages/majority of prices for those products are generally around \$125. This maybe means that the shelveloc variable doesn't effect the price much.
 
+The base price, \$114 is the price regardless of the shelve location. The good shelve is slightly more than medium, (compared to bad), but not statistically significant.
+
 ### Predict Sales using all variables
 
 Below, fit a linear regression model to predict `Sales` that includes ALL variables as well as a few interaction terms of your choice.
 
 ```{r}
-lm.carseats <- lm(Sales ~ ShelveLoc * Price * Urban * US * CompPrice * Income * Advertising * Population * Price * Age * Education, data=carseats)
+lm.carseats <- lm(Sales ~ . + ShelveLoc:Advertising +ShelveLoc:Price, data=carseats)
 
+#ShelveLoc * Price * Urban * US * CompPrice * Income * Advertising * Population * Price * Age * Education,
 summary(lm.carseats)
 
 ```
@@ -179,10 +182,13 @@ summary(lm.carseats)
 
 Provide a summary of the model output, including key coefficients and their significance levels. Discuss which variables are statistically significant predictors of `Sales`.
 
-(Write answer here)
+Most of the variables are not good indicators of sales. Compprice, Income, advertising, shelve good and age are all statistically significant.
 
 #### Practical implications
 
 Discuss the practical implications of your findings. How can this model inform business decisions regarding pricing, advertising, or product placement, etc?
 
-(Write your answer here)
+This model can inform business decisions regarding pricing, advertising and product placement, by helping businesses decide what to spend their resources on. Based on this model, Businesses may want to place car seats they want sold in the "good" shelves. Businesses may not need to consider population in their sales, which may signify that regardless of population, car seats sales still need to be made.
+
+Businesses may want to continue using comparative pricing as it increased car sales. \
+The biggest impact on sales is shelf location, but putting money in advertising is also important. However, Shelf location and advertising are not dependent on each other as a predictor of sales.
