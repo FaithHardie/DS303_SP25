@@ -192,5 +192,5 @@ Discuss the practical implications of your findings. How can this model inform b
 
 This model can inform business decisions regarding pricing, advertising and product placement, by helping businesses decide what to spend their resources on. Based on this model, Businesses may want to place car seats they want sold in the "good" shelves. Businesses may not need to consider population in their sales, which may signify that regardless of population, car seats sales still need to be made.
 
-Businesses may want to continue using comparative pricing as it increased car sales. \
+Businesses may want to continue using comparative pricing as it increased car sales.\
 The biggest impact on sales is shelf location, but putting money in advertising is also important. However, Shelf location and advertising are not dependent on each other as a predictor of sales.
