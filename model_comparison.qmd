@@ -58,7 +58,7 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point()
 ```
 
-##  Linear Regression
+## Linear Regression
 
 Form a hypothesis about what variables may be useful to predict `mpg` and build your linear regression model below. You can include multiple variables.
 

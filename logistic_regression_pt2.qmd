@@ -38,7 +38,7 @@ Log-odds convert probabilities into a continuous scale, enabling a linear relati
 
 -   It can predict values outside \[0, 1\] \<- this range is fundamental to understanding probability
 
--   It assumes a linear relationship, while binary outcomes follow an S-shaped curve
+-   It assumes a linear relationship, while binary outcomes follow an S-shaped curve (?)
 
 -   In reality, the relationship between predictors and the probability of an event occurring is often nonlinear. For example, small changes in a predictor might not have a substantial impact on the outcome probability when the predictor value is very high or very low, but could have a large impact in the middle range.
 
