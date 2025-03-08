@@ -44,7 +44,7 @@ Let me show you some slides about what it took to process this data.
 ```{r, echo = FALSE, message = FALSE}
 library(tidyverse)
 
-# install.packages("phonR")
+ install.packages("phonR")
 library(phonR)
 ```
 
@@ -56,7 +56,7 @@ We'll also do a bit of processing to ensure that the variables are behaving the 
 
 ```{r}
 # read in data
-P101 <- read_csv("data/P101.csv")
+P101 <- read_csv("data/P112 (2).csv")
 
 # convert variables to factor where needed
 convert_to_factor <- function(df, cols) {
