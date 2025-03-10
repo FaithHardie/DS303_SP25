@@ -361,7 +361,7 @@ hsb2$race.f <- relevel(hsb2$race.f, ref = "Asian")
 ## Summary Table
 
 | **Coding Scheme** | **Intercept Interpretation** | **Coefficient Interpretation** | **Comparison Basis** | **When to Use** |
-|--------------|--------------|--------------|--------------|------------------|
+|----|----|----|----|----|
 | **Dummy Coding** | Mean of the reference group | Difference between each group’s mean and the reference group’s mean | Reference group | When you want to compare each group against a baseline or reference category |
 | **Simple Coding** | Grand mean (mean of all group means) | Difference between each group’s mean and the reference group’s mean | Reference group | When you want to compare each group to a reference, but with the overall mean as the intercept for easier model interpretation |
 | **Deviation Coding** | Grand mean (mean of all group means) | Difference between each group’s mean and the overall mean | Overall mean | When you want to test whether each group differs from the overall average rather than a specific reference group |
