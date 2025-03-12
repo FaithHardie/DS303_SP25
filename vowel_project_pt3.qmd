@@ -118,6 +118,8 @@ For this project, you will explore and analyze the [**class-wide data set**]{.un
 -   Identify and explain your variables of interest
 -   State research questions or hypotheses about this data
 
+The purpose of this project is to analyze the different components of how our class says words, including the vowel, onset, offset, and environmental factors that can affect how we speak. My variables of interest are real word, f0, onset and offset. I'm interested in if a persons pitch changes if the word is real or not, and how they pronounce real words vs. non real words.
+
 ## EDA and Vowel Plots
 
 (3 points)
@@ -129,7 +131,12 @@ For this project, you will explore and analyze the [**class-wide data set**]{.un
 -   Include at least one visual that supports your hypothesis/justifies your models below, and explain
 
 ```{r}
-
+#ggplot(class_clean, aes(x = arpa , y = f2)) +
+#  geom_boxplot()
+ggplot(class_clean, aes(x= f1, y=f2, fill=ethnicity))+
+  geom_point()
+#par()
+#with(class_clean, plotVowels(f1, f2, var.sty.by = sex, var.col.by = ethnicity, pretty = TRUE))
 ```
 
 ## Model Selection and Justification
