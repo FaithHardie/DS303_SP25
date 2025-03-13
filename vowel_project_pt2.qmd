@@ -181,7 +181,7 @@ Extra tools:
 
 -   mixed effects models (linear or logistic): When you want to include random effects.
 
--    f1/f2 vs. f1_z/f2_z: raw values for comparing across speakers, z-scored values for comparisons within participant. I recommend just using the raw values and then invluding `ppt` as a random effect.
+-   f1/f2 vs. f1_z/f2_z: raw values for comparing across speakers, z-scored values for comparisons within participant. I recommend just using the raw values and then invluding `ppt` as a random effect.
 
 ## Give it a go!
 

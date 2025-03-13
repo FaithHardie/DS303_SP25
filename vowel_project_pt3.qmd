@@ -67,9 +67,10 @@ all_data <- all_data %>%
 skimP112 <-  skimr::skim(P112)
 #view(P112)
 
-summary(all_data)
+#summary(all_data)
 skimP112 <-  skimr::skim(all_data)
 view(all_data)
+class(all_data)
 ```
 
 ```{r}
@@ -92,6 +93,10 @@ P112_clean <- P112 %>%
   filter(abs(f1_z) <= 1.25, abs(f2_z) <= 1.25)
 ```
 
+```{r}
+
+```
+
 ## Explain the Data
 
 (1 point)
@@ -104,9 +109,9 @@ In paragraph form:
 
 **ANSWER:** The data in DS303_combined.csv comes from our classes recorded voices. The process of getting this data started with completing a google form with questions regarding our personal backgrounds such as gender, languages we speak, our place of birth, and other questions based on circumstances that effect how we speak. We then recorded our voices using PRATT software and Dr. Camp organized our classes recordings into a data set.
 
-The data for the class wide dataset, DS303_combined.csv
+The data for the class wide data set, DS303_combined.csv has 26 variables, 13 participants, and 1201 items. Each student had 29 words.
 
-In addition to Dr. Camp removing mispronounced words, we converted certain variables to factors and removed the words "cot" and "caught." The variables changed to factors were
+In addition to Dr. Camp removing mispronounced words, we converted certain variables to factors and removed the words "cot" and "caught." Independently, I cleaned the data set by removing any outliers by filtering it.
 
 ## Variables of Interest
 
@@ -133,10 +138,10 @@ The purpose of this project is to analyze the different components of how our cl
 ```{r}
 #ggplot(class_clean, aes(x = arpa , y = f2)) +
 #  geom_boxplot()
-ggplot(class_clean, aes(x= f1, y=f2, fill=ethnicity))+
-  geom_point()
-#par()
-#with(class_clean, plotVowels(f1, f2, var.sty.by = sex, var.col.by = ethnicity, pretty = TRUE))
+#ggplot(class_clean, aes(x= f1, y=f2, fill=ethnicity))+
+#  geom_point()
+par()
+with(class_clean, plotVowels(f1, f2, var.sty.by=sex, var.col.by = offset, pretty = TRUE,  legend.kwd = "bottomleft"))
 ```
 
 ## Model Selection and Justification
