@@ -184,7 +184,7 @@ class_clean$sex <- relevel(class_clean$sex, ref = "Male")
 m6 <- lm(f1 ~ real_word *sex, data=class_clean) 
 summary(m6)
 m7 <- lm(f1 ~ real_word *sex, data=class_clean) 
-summary(m7))
+summary(m7)
 ```
 
 ## Model Comparisons and Best Fit
