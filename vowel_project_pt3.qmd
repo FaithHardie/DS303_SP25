@@ -1,11 +1,11 @@
 ---
 title: "Vowel Analysis Final Report"
 author: 
-  - "Student Name"
+  - "Faith Hardie"
   - "DS303, SP25"
   - "Prof. Amber Camp"
 date: 3/14/25
-format: html
+format: pdf
 toc: true
 editor: visual
 theme: spacelab
@@ -68,7 +68,7 @@ skimP112 <-  skimr::skim(P112)
 #view(P112)
 
 #summary(all_data)
-skimP112 <-  skimr::skim(all_data)
+skimalldata <-  skimr::skim(all_data)
 view(all_data)
 class(all_data)
 ```
@@ -91,10 +91,6 @@ P112_clean <- P112 %>%
     f2_z = (f2 - mean(f2)) / sd(f2)
   ) %>%
   filter(abs(f1_z) <= 1.25, abs(f2_z) <= 1.25)
-```
-
-```{r}
-
 ```
 
 ## Explain the Data
@@ -123,7 +119,7 @@ For this project, you will explore and analyze the [**class-wide data set**]{.un
 -   Identify and explain your variables of interest
 -   State research questions or hypotheses about this data
 
-The purpose of this project is to analyze the different components of how our class says words, including the vowel, onset, offset, and environmental factors that can affect how we speak. My variables of interest are real word, f0, onset and offset. I'm interested in if a persons pitch changes if the word is real or not, and how they pronounce real words vs. non real words.
+The purpose of this project is to analyze the different components of how our class says words, including the vowel, onset, offset, and environmental factors that can affect how we speak. My variables of interest are real word, f1, and f2. I am interested to see if whether the word is real or not affects how the vowel is pronounced.
 
 ## EDA and Vowel Plots
 
@@ -136,13 +132,21 @@ The purpose of this project is to analyze the different components of how our cl
 -   Include at least one visual that supports your hypothesis/justifies your models below, and explain
 
 ```{r}
-#ggplot(class_clean, aes(x = arpa , y = f2)) +
-#  geom_boxplot()
+ggplot(P112, aes(x = real_word, y = f1)) +
+  geom_boxplot()
+ggplot(class_clean, aes(x=real_word, y=f2)) +
+  geom_boxplot()
+ggplot(P112, aes(x = real_word, y = f1)) +
+  geom_boxplot()
+ggplot(class_clean, aes(x=real_word, y=f2)) +
+  geom_boxplot()
 #ggplot(class_clean, aes(x= f1, y=f2, fill=ethnicity))+
 #  geom_point()
 par()
-with(class_clean, plotVowels(f1, f2, var.sty.by=sex, var.col.by = offset, pretty = TRUE,  legend.kwd = "bottomleft"))
+with(class_clean, plotVowels(f1, f2, var.sty.by=sex, var.col.by = real_word, pretty = TRUE,  legend.kwd = "bottomleft"))
 ```
+
+**Patterns, observations:** For the EDA part of this assignment, I did 4 box plots using ggplot and 1 dot plot using phonr. For both my personal data and the class data, there is a small difference in both formant 1 and 2 depending on whether the word is real or not real, however, this doesn't necessary mean that the vowel formants changed because of the words realness, it could be dependent on other variables, how how the words that aren't real are commonly pronounced (the way the tongue sits when the words are said) compared to if the word is real. The difference between real and not real also doesn't seem to be statistically significant from these graphs, but I would have to run my regression models to fully understand the relationship.
 
 ## Model Selection and Justification
 
@@ -158,8 +162,25 @@ with(class_clean, plotVowels(f1, f2, var.sty.by=sex, var.col.by = offset, pretty
 
 -   Which variable(s) are included?
 
-```{r}
+    Answer: I will be using logistic regression to investigate the relationship between my predictors and outcome variable because my predictor variable real_word has only two options, real or not_real, so it is a binomial predictor. However, I also wanted to investigate if f1 and f2 could predict if the word is real or not, and for that I need to use linear regression, since the predictor f1 is not a binary or binomial predictor, and its values are outside of 0 or 1. The variables I am including are real_word, f1, f2, and sex.
 
+```{r}
+m1 <- glm( real_word ~ f1 , data = class_clean, family = binomial)
+summary(m1)
+m2 <- glm(real_word ~ f2, data = class_clean, family = binomial) 
+summary(m2) 
+#m3 <- glm(real_word ~ f1*sex, data = class_clean, family = binomial) 
+#summary(m3) 
+m4 <- glm(real_word ~ f2*sex, data = class_clean, family = binomial) 
+summary(m4) 
+```
+
+```{r}
+m5 <- lm(f1 ~ real_word, data=class_clean) 
+summary(m5) 
+class_clean$sex <- relevel(class_clean$sex, ref = "Male") 
+m6 <- lm(f1 ~ real_word *sex, data=class_clean) 
+summary(m6) 
 ```
 
 ## Model Comparisons and Best Fit
@@ -171,7 +192,9 @@ with(class_clean, plotVowels(f1, f2, var.sty.by=sex, var.col.by = offset, pretty
 -   Compare the two models, assess model fit, and determine the better fitting one
 
 ```{r}
-
+anova(m1, m3)
+anova(m2, m4)
+#anova(m5, m6)
 ```
 
 ## Interpretation of Results
@@ -180,6 +203,8 @@ with(class_clean, plotVowels(f1, f2, var.sty.by=sex, var.col.by = offset, pretty
 
 -   Interpret coefficients and significance
 -   Explain how the predictor variable(s) influence the outcome
+
+**Answer:** Model 1 and 3:
 
 ## Discussion and Conclusion
 
