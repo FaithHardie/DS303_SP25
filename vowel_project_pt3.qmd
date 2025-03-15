@@ -5,7 +5,7 @@ author:
   - "DS303, SP25"
   - "Prof. Amber Camp"
 date: 3/14/25
-format: html
+format: pdf
 toc: true
 editor: visual
 theme: spacelab
@@ -105,9 +105,9 @@ In paragraph form:
 
 **ANSWER:** The data in DS303_combined.csv comes from our classes recorded voices. The process of getting this data started with completing a google form with questions regarding our personal backgrounds such as gender, languages we speak, our place of birth, and other questions based on circumstances that effect how we speak. We then recorded our voices using PRATT software and Dr. Camp organized our classes recordings into a data set.
 
-The data for the class wide data set, DS303_combined.csv has 26 variables, 13 participants, and 1201 items. Each student had 29 words.
+The data for the class wide data set, DS303_combined.csv has 26 variables, 13 participants, 1201 observations and 32 itemsitems. Each student had 29 words.
 
-In addition to Dr. Camp removing mispronounced words, we converted certain variables to factors and removed the words "cot" and "caught." Independently, I cleaned the data set by removing any outliers by filtering it.
+In addition to Dr. Camp removing mispronounced words, we converted certain variables to factors and removed the words "cot" and "caught." Independently, I cleaned the data set by removing any outliers by filtering it based on their z core, through the process of cleaning my data, computing the z scores of f1 and f2, and removing anything outside of 1.25 standard deviation.
 
 ## Variables of Interest
 
@@ -120,6 +120,8 @@ For this project, you will explore and analyze the [**class-wide data set**]{.un
 -   State research questions or hypotheses about this data
 
 The purpose of this project is to analyze the different components of how our class says words, including the vowel, onset, offset, and environmental factors that can affect how we speak. My variables of interest are real word, f1, and f2. I am interested to see if whether the word is real or not affects how the vowel is pronounced.
+
+Research question: Can we predict if a word is real or not based on f1 and/or f2? vice versa.
 
 ## EDA and Vowel Plots
 
@@ -162,15 +164,15 @@ with(class_clean, plotVowels(f1, f2, var.sty.by=sex, var.col.by = real_word, pre
 
 -   Which variable(s) are included?
 
-    Answer: I will be using logistic regression to investigate the relationship between my predictors and outcome variable because my predictor variable real_word has only two options, real or not_real, so it is a binomial predictor. However, I also wanted to investigate if f1 and f2 could predict if the word is real or not, and for that I need to use linear regression, since the predictor f1 is not a binary or binomial predictor, and its values are outside of 0 or 1. The variables I am including are real_word, f1, f2, and sex.
+    Answer: I will be using logistic regression to investigate the relationship between my predictors and outcome variable because my predictor variable real_word has only two options, real or not_real, so it is binary, and a logistic model predicts probability. I want to know the probability that f1 can predict real_word. However, I also wanted to investigate if f1 could predict if the word is real or not, and for that I need to use linear regression, since the predictor f1 is not a binary or binomial predictor, and its values are outside of 0 or 1. The variables I am including are real_word, f1, f2, and sex.
 
 ```{r}
 m1 <- glm( real_word ~ f1 , data = class_clean, family = binomial)
 summary(m1)
 m2 <- glm(real_word ~ f2, data = class_clean, family = binomial) 
 summary(m2) 
-#m3 <- glm(real_word ~ f1*sex, data = class_clean, family = binomial) 
-#summary(m3) 
+m3 <- glm(real_word ~ f1*sex, data = class_clean, family = binomial) 
+summary(m3) 
 m4 <- glm(real_word ~ f2*sex, data = class_clean, family = binomial) 
 summary(m4) 
 ```
@@ -180,7 +182,9 @@ m5 <- lm(f1 ~ real_word, data=class_clean)
 summary(m5) 
 class_clean$sex <- relevel(class_clean$sex, ref = "Male") 
 m6 <- lm(f1 ~ real_word *sex, data=class_clean) 
-summary(m6) 
+summary(m6)
+m7 <- lm(f1 ~ real_word *sex, data=class_clean) 
+summary(m7))
 ```
 
 ## Model Comparisons and Best Fit
@@ -204,7 +208,7 @@ anova(m1, m3)
 -   Interpret coefficients and significance
 -   Explain how the predictor variable(s) influence the outcome
 
-**Answer:** Model 1 and 3:
+**Answer:** The p-value 0.509 is not statistically significant, so adding the variable sex in m3 wasn't necessarily an improvement. While the deviance (801.44-800.09) reduced, it was small, so also not statistically significant. In m1, f1 was the only predictor for real_word, versus in m3, both f1 and the sex where my predictors. In both m1 and m3, my intercepts were positive, meaning that f1 and real_word have a positive relationship. However in m3, the coefficient for male is negative, because it is being compared to female. According to my models, f1 is a predictor of real_word, and sex with f1 is not a predictor of whether a word is real or not.
 
 ## Discussion and Conclusion
 
@@ -213,3 +217,5 @@ anova(m1, m3)
 -   Summarize key findings
 -   Discuss implications
 -   Mention limitations
+
+Though testing multiple models, I can conclude that the research question: "can f1 predict if a word is real or not" can be answered based on these models 1 and 3, yes. However, that may not be because the word is real or not, but rather because that just how the vowel is pronounced. I do not think you could apply this relationship to other data outside of this data set. I also realized, that of course sex is not a predictor of real_word, because male or female doesn't change if the word is real or not. There can however be differences in how they pronounce those words, and there are. In my EDA analysis dotplot, females (open circles) were much higher on the plot than males. Overall, these regression models are limited to this data set.
