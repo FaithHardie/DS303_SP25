@@ -5,7 +5,7 @@ author:
   - "DS303, SP25"
   - "Prof. Amber Camp"
 date: 3/14/25
-format: pdf
+format: html
 toc: true
 editor: visual
 theme: spacelab
@@ -193,7 +193,7 @@ summary(m6)
 
 ```{r}
 anova(m1, m3)
-anova(m2, m4)
+#anova(m2, m4)
 #anova(m5, m6)
 ```
 
