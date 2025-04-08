@@ -179,7 +179,7 @@ Now try applying the same workflow to another dataset: `diamonds`
 
 ```{r}
 diamonds <- diamonds
-#view(diamonds)
+view(diamonds)
 train_data <- diamonds[train_index, ]
 test_data <- diamonds[-train_index, ]
 ```
@@ -188,26 +188,30 @@ test_data <- diamonds[-train_index, ]
 
 ```{r}
 m_simple <- lm(price ~ carat, data = train_data)
-m_complex <- lm(price ~ carat+ cut + color + clarity, data = train_data)
+m_complex <- lm(price ~ carat+ cut + color + depth, data = train_data)
 ```
 
 ## Step 3: Predict on the Test Set
 
 ```{r}
-pred_simple <- predict(model_simple, test_data)
-pred_complex <- predict(model_complex, test_data)
+pred_simple <- predict(m_simple, test_data)
+pred_complex <- predict(m_complex, test_data)
 
-rmse(test_data$mpg, pred_simple)
-rmse(test_data$mpg, pred_complex)
 ```
 
 ## Step 4: Compare Train and Test RMSE
 
 ```{r}
+rmse(test_data$price, pred_simple)
+rmse(test_data$price, pred_complex)
 
+rmse(train_data$price, pred_simple)
+rmse(train_data$price, pred_complex)
 ```
 
 Which is the better model and why?
+
+The complex model is better because it has a higher RMSE score, it more accurately predicts the price of a diamond.
 
 ------------------------------------------------------------------------
 
