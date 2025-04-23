@@ -1,0 +1,191 @@
+---
+title: "DS303FINAL"
+subtitle: "Identifying Predictors And Patterns In Malignant Breast Cancer"
+author: "Faith Hardie"
+institute: "DS 303"
+date: 4/20/25
+format:
+  revealjs:
+    highlight-style: arrow
+    slide-number: c/t
+    css: styles.css
+theme: serif
+editor: visual
+---
+
+## Purpose
+
+Explore patterns in malignant vs. benign cancer using logistic regression, model comparison and visualization to identify high contributors or predictors of diagnosis.
+
+## Introduction
+
+::: footer
+Important knowledge
+:::
+
+<div>
+
+-   Breast cancer is mainly checked using mammograms, ultrasounds, and MRIs. These images help doctors find lumps or other changes early.
+-   Benign lumps are usually soft, round, and move easily. Malignant (cancerous) lumps are often hard, have uneven edges, and don't move much.
+-   Shape, growth, density and BI-RADS scores.
+
+(American Breast Cancer Society, RadiologyInfo.org.)
+
+</div>
+
+## Methodology
+
+::: footer
+Data information
+:::
+
+-   I found my data set through kaggle, first sourced from The Wisconsin Breast Cancer data set.
+-   The dataset contains features collected from FNA (fine needle aspiration) imaging, which is microscopic imaging of the cells nuclei taken from the breast cancer sample (using a fine needle.)
+-   This isn't typical imaging used by radiologists like mammograms or ultrasounds which are non-invasive and sometimes inconclusive.
+-   Example Features: radius_mean, area_mean, symmetry_mean.
+
+## Methodology
+
+::: footer
+Methods
+:::
+
+-   Preprocessing: I change the M or B characters to 0 and 1 for the purpose of logistic regression. I reduce dimensionality in my dataset from wide to long to expand visualization possibilities.
+-   EDA: I create density plots box plots to explore trends in the features o benign and malignant diagnosis.
+-   Regression models: I create logistic regression models with numerous features of interest.
+-   Model comparison: I use ANOVA comparison to decide most effective model.
+
+## EDA: Density Plots
+
+```{r}
+#| include: false
+library(lme4)
+library(tidyverse)
+library(ggplot2)
+
+bcancer <- read_csv("data/data.csv")
+bcskim_data <- skimr::skim(bcancer)
+```
+
+```{r}
+#| include: false
+# convert to factor
+convert_to_factor <- function(df, cols) {
+  df[cols] <- lapply(df[cols], as.factor)
+  return(df)
+}
+
+bcancer <- convert_to_factor(bcancer, c("diagnosis"))
+```
+
+```{r}
+#| echo: false
+#| fig-height: 3
+#| fig-width: 6
+ggplot(bcancer, aes(x = area_mean, fill = factor(diagnosis))) +
+  geom_density(alpha = 0.4)
+
+ggplot(bcancer, aes(x = texture_mean, fill = factor(diagnosis))) +
+  geom_density(alpha = 0.4)
+
+```
+
+## EDA: Density plots
+
+```{r}
+#| echo: false
+#| fig-height: 3
+#| fig-width: 6
+
+ggplot(bcancer, aes(x = symmetry_mean, fill = factor(diagnosis))) +
+  geom_density(alpha = 0.4)
+
+ggplot(bcancer, aes(x = compactness_mean, fill = factor(diagnosis))) +
+  geom_density(alpha = 0.4)
+```
+
+## EDA: Box Plots
+
+```{r}
+#| echo: false
+# Reshape to long format
+bcancer_long <- bcancer %>%
+  pivot_longer(
+    cols = c(radius_mean, texture_mean, perimeter_mean, area_mean, 
+             smoothness_mean, compactness_mean, concavity_mean, symmetry_mean),
+    names_to = "variable",
+    values_to = "value"
+  )
+
+# Boxplot
+ggplot(bcancer_long, aes(x = factor(diagnosis), y = value)) +
+  geom_boxplot() +
+  facet_wrap(~ variable, scales = "free_y") +
+  xlab("Diagnosis (0 = benign, 1 = malignant)") +
+  ylab("Value") +
+  theme_minimal()
+```
+
+## Logistic Regression Models
+
+```{r}
+#| include: false
+Sarea <- glm(diagnosis ~ area_mean, data = bcancer, family = binomial)
+summary(Sarea)
+```
+
+```{r}
+#| echo: true
+m1 <- glm(diagnosis ~ area_mean + concavity_mean, data = bcancer, family = binomial)
+
+summary(m1)
+
+```
+
+## Logistic Regression Models Cont.
+
+```{r}
+#| echo: true
+Compactness <- glm(diagnosis ~ compactness_mean, data = bcancer, family = binomial)
+summary(Compactness)
+```
+
+## Logistic Regression Models Cont.
+
+```{r}
+#| echo: true
+m2 <- glm(diagnosis ~ radius_mean + perimeter_mean + area_mean + compactness_mean + concavity_mean + concave_points_mean, data = bcancer, family = binomial)
+summary(m2)
+```
+
+## Logistic Regression Models Cont.
+
+```{r}
+#| echo: true
+m3 <- glm(diagnosis ~ area_mean + radius_mean + perimeter_mean, data = bcancer, family = binomial)
+summary(m3)
+```
+
+## Logistic Regression Models Cont.
+
+```{r}
+m4 <- glm(diagnosis ~ area_mean + concavity_mean + texture_mean,  data = bcancer, family = binomial)
+
+summary(m4)
+```
+
+## Model Comparison
+
+```{r}
+#| echo: true
+anova(m1, m4)
+
+```
+
+## Conclusion
+
+-   Model 4 is the most accurate predictor for diagnosis.
+-   The strongest features for prediction were area and concavity.
+-   Features that correlate such as area, perimeter and radius are highly correlated, rendering some features unappealing for logistic regression.
+-   Balance between feature selection and model simplicity.
+-   Future: see how different features interact with one another and their correlation.
